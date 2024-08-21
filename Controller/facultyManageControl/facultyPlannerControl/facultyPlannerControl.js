@@ -20,11 +20,15 @@ exports.createPlanner = async (req, res) => {
             subjectCode
         } = req.body;
 
-        const token = req.cookies.token; // Retrieve token from cookies
+        // Extract token from Authorization header
+        const authHeader = req.headers.authorization;
 
-        if (!token) {
-            return res.status(401).json({ error: 'Unauthorized: No token found in cookies' });
+        if (!authHeader) {
+            return res.status(401).json({ error: 'Unauthorized: No token provided' });
         }
+
+        // Extract the token part from the Authorization header (assuming 'Bearer <token>')
+        const token = authHeader.split(' ')[1];
 
         // Find the FacultyUser by the provided token
         const user = await FacultyUser.findOne({ token });
