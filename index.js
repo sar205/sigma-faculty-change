@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
+    
         if (!origin) return callback(null, true);
         return callback(null, origin);
     },
